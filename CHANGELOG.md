@@ -8,3 +8,4 @@ First release.
 - "Police Cameras" harmonized to "Cameras" (`category_raw` keeps the original).
 - 150 out-of-Chicago geocodes from the 2024+ address cache rejected (`rejected_out_of_bounds`).
 - Reproduces the City That Works 2023 sidewalk-share finding (Ward 50 4.1%, Ward 40 24.6%).
+- Infrastructure menu price list: 111 rows, each with source and confidence label (no city-published price sheet found; see `data/infrastructure_menu_SOURCES.md`).
