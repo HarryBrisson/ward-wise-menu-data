@@ -1,0 +1,203 @@
+{
+  "rows": 51073,
+  "years": [
+    2005,
+    2026
+  ],
+  "geocoded_pct": 97.0,
+  "by_year": {
+    "2005": {
+      "cost": 60829107.0,
+      "rows": 2631,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 98.0,
+      "unassigned_ward_rows": 0
+    },
+    "2006": {
+      "cost": 67523551.0,
+      "rows": 2744,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 97.6,
+      "unassigned_ward_rows": 0
+    },
+    "2007": {
+      "cost": 68214541.0,
+      "rows": 3092,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 97.4,
+      "unassigned_ward_rows": 0
+    },
+    "2008": {
+      "cost": 68622217.0,
+      "rows": 2688,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 97.6,
+      "unassigned_ward_rows": 0
+    },
+    "2009": {
+      "cost": 65907595.0,
+      "rows": 2227,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 98.2,
+      "unassigned_ward_rows": 0
+    },
+    "2010": {
+      "cost": 65968397.0,
+      "rows": 2527,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 98.3,
+      "unassigned_ward_rows": 0
+    },
+    "2011": {
+      "cost": 65951803.0,
+      "rows": 2163,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 90.6,
+      "unassigned_ward_rows": 0
+    },
+    "2012": {
+      "cost": 64829900.0,
+      "rows": 2009,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 98.4,
+      "unassigned_ward_rows": 0
+    },
+    "2013": {
+      "cost": 65895413.0,
+      "rows": 2247,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 99.2,
+      "unassigned_ward_rows": 0
+    },
+    "2014": {
+      "cost": 65788174.0,
+      "rows": 2416,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 99.8,
+      "unassigned_ward_rows": 0
+    },
+    "2015": {
+      "cost": 65979952.0,
+      "rows": 2264,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 99.5,
+      "unassigned_ward_rows": 0
+    },
+    "2016": {
+      "cost": 65985505.94,
+      "rows": 2532,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 99.4,
+      "unassigned_ward_rows": 0
+    },
+    "2017": {
+      "cost": 65923862.22,
+      "rows": 2402,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 97.6,
+      "unassigned_ward_rows": 0
+    },
+    "2018": {
+      "cost": 65730452.77,
+      "rows": 2475,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 98.9,
+      "unassigned_ward_rows": 0
+    },
+    "2019": {
+      "cost": 65218524.83,
+      "rows": 2422,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 96.2,
+      "unassigned_ward_rows": 0
+    },
+    "2020": {
+      "cost": 50379674.1,
+      "rows": 1388,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 93.2,
+      "unassigned_ward_rows": 0
+    },
+    "2021": {
+      "cost": 74989954.5,
+      "rows": 2708,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 95.9,
+      "unassigned_ward_rows": 0
+    },
+    "2022": {
+      "cost": 74084650.85,
+      "rows": 2650,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 94.5,
+      "unassigned_ward_rows": 0
+    },
+    "2023": {
+      "cost": 73765901.67,
+      "rows": 2460,
+      "wards": 50,
+      "period": "annual",
+      "geocoded_pct": 99.6,
+      "unassigned_ward_rows": 15
+    },
+    "2024": {
+      "cost": 72703567.52,
+      "rows": 2419,
+      "wards": 50,
+      "period": "Q4",
+      "geocoded_pct": 88.3,
+      "unassigned_ward_rows": 0
+    },
+    "2025": {
+      "cost": 70382766.24,
+      "rows": 2268,
+      "wards": 50,
+      "period": "Q4",
+      "geocoded_pct": 97.1,
+      "unassigned_ward_rows": 0
+    },
+    "2026": {
+      "cost": 11046022.19,
+      "rows": 341,
+      "wards": 36,
+      "period": "Q1",
+      "geocoded_pct": 95.9,
+      "unassigned_ward_rows": 0
+    }
+  },
+  "categories": [
+    "Alleys",
+    "Beautification",
+    "Bicycle Infrastructure",
+    "Cameras",
+    "Lighting",
+    "Misc.",
+    "Misc. CDOT",
+    "Parks",
+    "Pedestrian Infrastructure",
+    "Schools",
+    "Sidewalk Repair",
+    "Street Redesign",
+    "Street Resurfacing",
+    "Traffic Signals",
+    "Viaducts"
+  ]
+}
