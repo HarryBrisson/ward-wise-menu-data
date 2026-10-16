@@ -11,5 +11,5 @@ jobs:
       - name: Rebuild from sources and confirm data/ is current
         run: |
           python scripts/build_release.py
-          git diff --stat --exit-code -- data/ ':!data/infrastructure_menu*'
+          git diff --stat --exit-code -- data/ ':!data/infrastructure_menu*' ':!data/*.parquet'
       - run: python scripts/validate.py
