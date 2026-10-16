@@ -1,2 +1,6 @@
 __pycache__/
 .DS_Store
+# Kept locally, not republished: third-party web page copies and a large duplicate of a public upstream file
+sources/menu_price_docs/ward*_page.html
+sources/menu_price_docs/ward40_2025_peoples_budget_proposals.html
+sources/menu_price_docs/*.docx
