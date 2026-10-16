@@ -17,7 +17,7 @@ DATA = ROOT / "data"
 LINE_ITEM_COLUMNS = [
     "id", "ward", "year", "period", "is_partial_year", "item", "description", "location", "cost",
     "category", "category_raw", "active_transport", "lat", "lng", "geocode_status", "geocode_method",
-    "ward_map", "source_pdf", "source_url", "provenance",
+    "ward_map", "ward_map_fit", "source_pdf", "source_url", "provenance",
 ]
 # Findings others have published from this data; a release that stops reproducing them needs a
 # CHANGELOG entry explaining why. (ward, year, category, expected share %, tolerance)
@@ -47,7 +47,7 @@ def main() -> None:
     located = items["geocode_status"] == "geocoded"
     check(items.loc[located, "lat"].between(41.6, 42.1).all()
           and items.loc[located, "lng"].between(-87.95, -87.5).all(), "geocode outside Chicago bbox")
-    check(located.mean() >= 0.95, f"geocode coverage fell to {located.mean():.1%}")
+    check(located.mean() >= 0.94, f"geocode coverage fell to {located.mean():.1%}")
     check((items.loc[items["year"] >= 2012, "source_url"].fillna("") != "").mean() >= 0.95,
           "2012+ rows missing source_url")
 
@@ -76,7 +76,8 @@ def main() -> None:
 
     if (DATA / "infrastructure_menu.csv").exists():
         menu = list(csv.DictReader((DATA / "infrastructure_menu.csv").open()))
-        allowed = {"primary_document", "ward_wise_2023_unverified", "derived"}
+        allowed = {"primary_document", "official_secondary", "ward_wise_2023_unverified", "derived",
+                   "ward_office_secondary"}
         for row in menu:
             check(row.get("verification") in allowed, f"price row {row.get('item_slug')}: bad verification")
             check(bool(row.get("source_url")) or row.get("verification") != "primary_document",

@@ -42,9 +42,10 @@ Every row carries `source_pdf` and `source_url`. `sources/pdf_manifest.csv` reco
 | `category_raw` | The category before harmonization. "Police Cameras" in older rows is now "Cameras". |
 | `active_transport` | Whether `category` is Bicycle Infrastructure, Pedestrian Infrastructure or Street Redesign |
 | `lat`, `lng` | Representative point for the location |
-| `geocode_status` | `geocoded`, `unlocatable`, `not_geocoded` or `rejected_out_of_bounds` (see below) |
+| `geocode_status` | `geocoded`, `unlocatable`, `not_geocoded`, `rejected_out_of_bounds` or `rejected_outside_ward` (see below) |
 | `geocode_method` | How the point was found (see below) |
 | `ward_map` | Ward boundaries in force that year: 2003, 2015 or 2023. New maps were seated in May 2015 and May 2023. |
+| `ward_map_fit` | The map whose ward actually contains the point (see "Ward check") |
 | `source_pdf`, `source_url` | The posting the row came from |
 | `provenance` | Who extracted the row |
 
@@ -52,6 +53,7 @@ Every row carries `source_pdf` and `source_url`. `sources/pdf_manifest.csv` reco
 - `unlocatable`: the location text names no findable place.
 - `not_geocoded`: not attempted yet.
 - `rejected_out_of_bounds`: a geocoder returned a point outside Chicago, which was discarded.
+- `rejected_outside_ward`: the point is in Chicago but not in the project's own ward (see "Ward check"), so it was discarded.
 
 ## Categories
 
@@ -77,7 +79,7 @@ Categories describe what an item **is**, not what it is for. A speed-hump item c
 
 ## Geocoding
 
-Overall, 97% of rows are geocoded. Coverage per year is in `release_summary.json`. Methods, in order of preference:
+Overall, 94.8% of rows are geocoded. Coverage per year is in `release_summary.json`. Methods, in order of preference:
 
 1. **2019–2022:** the upstream geocoder's output (`upstream_geocoder`), with line and polygon geometry where it returned one.
 2. **2005–2018 and gaps in 2019–2023:** a local geocoder.
@@ -88,7 +90,16 @@ Overall, 97% of rows are geocoded. Coverage per year is in `release_summary.json
    - Points outside Chicago are rejected, which affects 77 rows in 2024.
    - Rows from the 2024 Q4 report that were not in the earlier Q3 batch are not geocoded yet.
 
-A multi-location project is placed at its **first** locatable part. Use the geojson's geometry for anything finer.
+A multi-location project is placed at its **first** part that passes the ward check. Use the geojson's geometry for anything finer.
+
+### Ward check
+
+Every point must fall inside its own ward, allowing about 400 m for boundary streets and alley corners. The ward is drawn from the map that applied that year:
+- the map in force;
+- in a remap year (2015, 2023), also the outgoing map;
+- in the three years before a remap, also the incoming map. The 2015 map was adopted in 2012, and many 2013–14 project points fall in their ward's new boundaries.
+
+`ward_map_fit` records which map matched. 1,127 points fail the check and are discarded (`rejected_outside_ward`). Most are 2024+ alley locations, where the city address geocoder misplaces four-street alley descriptions, and some are older local geocodes. These rows still count in every total; they just aren't placed on the map.
 
 ## Ward tables
 

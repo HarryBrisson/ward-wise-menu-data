@@ -73,6 +73,45 @@ def _in_chicago(hit: dict | None) -> bool:
     return lat == lat and lng == lng and 41.6 <= lat <= 42.1 and -87.95 <= lng <= -87.5
 
 
+WARD_TOLERANCE_DEG = 0.004  # ~350-450 m: boundary streets and alley corners sit on the line
+
+
+def load_ward_shapes() -> dict[int, dict[int, object]]:
+    """{map year: {ward: prepared buffered polygon}} for the 2003, 2015 and 2023 maps."""
+    from shapely.prepared import prep
+
+    shapes: dict[int, dict[int, object]] = {}
+    for era in (2003, 2015, 2023):
+        features = json.loads((SRC / "boundaries" / f"wards_{era}.geojson").read_text())["features"]
+        shapes[era] = {int(f["properties"]["ward"]): prep(shape(f["geometry"]).buffer(WARD_TOLERANCE_DEG))
+                       for f in features}
+    return shapes
+
+
+def candidate_maps(year: int) -> list[int]:
+    """Ward maps a year's ward numbers may refer to, most likely first. The map in force; in a
+    remap year (2015, 2023) also the outgoing map (projects straddle the May changeover); in the
+    three years before a remap also the incoming one — the 2015 map was adopted in 2012, and
+    2013-14 postings place many projects in their ward's NEW boundaries."""
+    maps = [ward_map(year)]
+    if year in (2015, 2023):
+        maps.append(ward_map(year - 1))
+    if 2012 <= year < 2015 or 2020 <= year < 2023:
+        maps.append(ward_map(year + 3))
+    return maps
+
+
+def ward_map_fit(shapes: dict, ward: int, year: int, lat: float, lng: float) -> int | None:
+    """The first candidate map whose ward (within tolerance) contains the point, else None."""
+    from shapely.geometry import Point
+
+    if ward == 99:
+        return ward_map(year)
+    point = Point(lng, lat)
+    return next((era for era in candidate_maps(year)
+                 if ward in shapes[era] and shapes[era][ward].contains(point)), None)
+
+
 def _parts(location) -> list[str]:
     return [p for p in _key(0, location)[1].split("; ") if p]
 
@@ -178,26 +217,33 @@ def main() -> None:
     items.insert(0, "id", stable_ids(items))
 
     by_key, by_location = load_geocodes()
-    lats, lngs, statuses, methods, geometries = [], [], [], [], []
+    ward_shapes = load_ward_shapes()
+    lats, lngs, statuses, methods, geometries, fits = [], [], [], [], [], []
     for row in items.itertuples(index=False):
         key = _key(row.year, row.location)
         lookup = (lambda loc: by_location.get(loc)) if row.year >= 2024 else (lambda loc: by_key.get((key[0], loc)))
         hit = lookup(key[1])
-        if not _in_chicago(hit):  # multi-location row: first locatable part
-            hit = next((h for h in map(lookup, _parts(row.location)) if _in_chicago(h)), hit)
-        if _in_chicago(hit):
+        def ok(h, row=row):
+            return _in_chicago(h) and ward_map_fit(ward_shapes, row.ward, row.year, h["lat"], h["lng"]) is not None
+
+        if not ok(hit):  # multi-location row: first part that lands in its own ward
+            hit = next((h for h in map(lookup, _parts(row.location)) if ok(h)), hit)
+        if ok(hit):
             lats.append(hit["lat"]); lngs.append(hit["lng"])
             statuses.append("geocoded"); methods.append(hit["method"]); geometries.append(hit.get("geometry"))
+            fits.append(ward_map_fit(ward_shapes, row.ward, row.year, hit["lat"], hit["lng"]))
         else:
-            lats.append(None); lngs.append(None); geometries.append(None); methods.append("")
-            statuses.append("rejected_out_of_bounds" if hit and hit.get("lat") is not None
+            lats.append(None); lngs.append(None); geometries.append(None); methods.append(""); fits.append(None)
+            statuses.append("rejected_outside_ward" if _in_chicago(hit)
+                            else "rejected_out_of_bounds" if hit and hit.get("lat") is not None
                             else "unlocatable" if hit else "not_geocoded")
     items["lat"], items["lng"] = lats, lngs
     items["geocode_status"], items["geocode_method"] = statuses, methods
+    items["ward_map_fit"] = pd.array(fits, dtype="Int64")
 
     columns = ["id", "ward", "year", "period", "is_partial_year", "item", "description", "location",
                "cost", "category", "category_raw", "active_transport", "lat", "lng", "geocode_status", "geocode_method",
-               "ward_map", "source_pdf", "source_url", "provenance"]
+               "ward_map", "ward_map_fit", "source_pdf", "source_url", "provenance"]
     items = items[columns]
     items.to_csv(OUT / "menu_line_items.csv", index=False)
     items.to_parquet(OUT / "menu_line_items.parquet", index=False)

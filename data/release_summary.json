@@ -4,14 +4,14 @@
     2005,
     2026
   ],
-  "geocoded_pct": 97.0,
+  "geocoded_pct": 94.8,
   "by_year": {
     "2005": {
       "cost": 60829107.0,
       "rows": 2631,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 98.0,
+      "geocoded_pct": 94.5,
       "unassigned_ward_rows": 0
     },
     "2006": {
@@ -19,7 +19,7 @@
       "rows": 2744,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 97.6,
+      "geocoded_pct": 94.2,
       "unassigned_ward_rows": 0
     },
     "2007": {
@@ -27,7 +27,7 @@
       "rows": 3092,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 97.4,
+      "geocoded_pct": 93.2,
       "unassigned_ward_rows": 0
     },
     "2008": {
@@ -35,7 +35,7 @@
       "rows": 2688,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 97.6,
+      "geocoded_pct": 95.3,
       "unassigned_ward_rows": 0
     },
     "2009": {
@@ -43,7 +43,7 @@
       "rows": 2227,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 98.2,
+      "geocoded_pct": 96.2,
       "unassigned_ward_rows": 0
     },
     "2010": {
@@ -51,7 +51,7 @@
       "rows": 2527,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 98.3,
+      "geocoded_pct": 96.3,
       "unassigned_ward_rows": 0
     },
     "2011": {
@@ -59,7 +59,7 @@
       "rows": 2163,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 90.6,
+      "geocoded_pct": 89.5,
       "unassigned_ward_rows": 0
     },
     "2012": {
@@ -67,7 +67,7 @@
       "rows": 2009,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 98.4,
+      "geocoded_pct": 97.6,
       "unassigned_ward_rows": 0
     },
     "2013": {
@@ -75,7 +75,7 @@
       "rows": 2247,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 99.2,
+      "geocoded_pct": 98.0,
       "unassigned_ward_rows": 0
     },
     "2014": {
@@ -83,7 +83,7 @@
       "rows": 2416,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 99.8,
+      "geocoded_pct": 99.0,
       "unassigned_ward_rows": 0
     },
     "2015": {
@@ -91,7 +91,7 @@
       "rows": 2264,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 99.5,
+      "geocoded_pct": 98.1,
       "unassigned_ward_rows": 0
     },
     "2016": {
@@ -99,7 +99,7 @@
       "rows": 2532,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 99.4,
+      "geocoded_pct": 97.9,
       "unassigned_ward_rows": 0
     },
     "2017": {
@@ -107,7 +107,7 @@
       "rows": 2402,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 97.6,
+      "geocoded_pct": 97.0,
       "unassigned_ward_rows": 0
     },
     "2018": {
@@ -115,7 +115,7 @@
       "rows": 2475,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 98.9,
+      "geocoded_pct": 97.9,
       "unassigned_ward_rows": 0
     },
     "2019": {
@@ -123,7 +123,7 @@
       "rows": 2422,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 96.2,
+      "geocoded_pct": 95.6,
       "unassigned_ward_rows": 0
     },
     "2020": {
@@ -131,7 +131,7 @@
       "rows": 1388,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 93.2,
+      "geocoded_pct": 92.9,
       "unassigned_ward_rows": 0
     },
     "2021": {
@@ -139,7 +139,7 @@
       "rows": 2708,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 95.9,
+      "geocoded_pct": 95.1,
       "unassigned_ward_rows": 0
     },
     "2022": {
@@ -147,7 +147,7 @@
       "rows": 2650,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 94.5,
+      "geocoded_pct": 94.2,
       "unassigned_ward_rows": 0
     },
     "2023": {
@@ -155,7 +155,7 @@
       "rows": 2460,
       "wards": 50,
       "period": "annual",
-      "geocoded_pct": 99.6,
+      "geocoded_pct": 97.0,
       "unassigned_ward_rows": 15
     },
     "2024": {
@@ -163,7 +163,7 @@
       "rows": 2419,
       "wards": 50,
       "period": "Q4",
-      "geocoded_pct": 88.3,
+      "geocoded_pct": 83.3,
       "unassigned_ward_rows": 0
     },
     "2025": {
@@ -171,7 +171,7 @@
       "rows": 2268,
       "wards": 50,
       "period": "Q4",
-      "geocoded_pct": 97.1,
+      "geocoded_pct": 88.6,
       "unassigned_ward_rows": 0
     },
     "2026": {
@@ -179,7 +179,7 @@
       "rows": 341,
       "wards": 36,
       "period": "Q1",
-      "geocoded_pct": 95.9,
+      "geocoded_pct": 87.4,
       "unassigned_ward_rows": 0
     }
   },
