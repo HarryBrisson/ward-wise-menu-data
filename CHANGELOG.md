@@ -1,5 +1,8 @@
 # Changelog
 
+## v1.1.1 — 2026-10-17
+- Item cost tables are now byte-reproducible: every tie is broken by row `id`, so rebuilds give the same row order on any pandas version. Values are unchanged from v1.1.0.
+
 ## v1.1.0 — 2026-10-17
 What wards actually paid, per item type (`scripts/build_item_costs.py`). Line items are unchanged from v1.0.0.
 - `menu_item_types.csv`: every normalized item name and the type it was grouped under (30 types, 97.6% of line items).

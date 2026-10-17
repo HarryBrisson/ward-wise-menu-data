@@ -112,7 +112,7 @@ def main() -> None:
     items["blocks"] = items["location"].map(blocks)
 
     names = (items.groupby(["name", "type"], dropna=False).size().reset_index(name="line_items")
-             .sort_values("line_items", ascending=False))
+             .sort_values(["line_items", "name"], ascending=[False, True], kind="stable"))
     names.to_csv(DATA / "menu_item_types.csv", index=False)
 
     typed = items[items["type"].notna()].copy()
@@ -121,7 +121,8 @@ def main() -> None:
 
     year_rows, ward_rows, out_types = [], [], []
     for type_id, label, pattern, unit in TYPES:
-        t = typed[typed["type"] == type_id]
+        # Sorted by id so every tie (equal costs, equal counts) breaks the same way on any machine.
+        t = typed[typed["type"] == type_id].sort_values("id", kind="stable")
         if t.empty:
             continue
         per_block_ok = unit == "block"
@@ -148,8 +149,8 @@ def main() -> None:
 
         recent = t[t["year"].isin(ward_window)]
         pool = recent if len(recent) >= MIN_N else t
-        cheapest = pool.nsmallest(3, "cost")
-        priciest = pool.nlargest(3, "cost")
+        cheapest = pool.sort_values(["cost", "id"], kind="stable").head(3)
+        priciest = pool.sort_values(["cost", "id"], ascending=[False, True], kind="stable").head(3)
         block_ex = {}
         if per_block_ok:
             # Absolute per-block extremes are dominated by errors in the posted address ranges (a
@@ -159,12 +160,13 @@ def main() -> None:
             if len(withb) >= MIN_N:
                 def near(q):
                     target = withb["pb"].quantile(q)
-                    return withb.iloc[(withb["pb"] - target).abs().argsort()[:3]].sort_values("pb")
+                    ranked = withb.assign(gap=(withb["pb"] - target).abs()).sort_values(["gap", "id"], kind="stable")
+                    return ranked.head(3).sort_values(["pb", "id"], kind="stable")
                 block_ex = {"low_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in near(0.05).itertuples()],
                             "high_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in near(0.95).itertuples()]}
         out_types.append({
             "type": type_id, "label": label, "unit": unit, "n": len(t), "years": [int(t["year"].min()), int(t["year"].max())],
-            "total": round(t["cost"].sum(), 2), "names": t["name"].value_counts().head(8).to_dict(),
+            "total": round(t["cost"].sum(), 2), "names": dict(sorted(t["name"].value_counts().items(), key=lambda kv: (-kv[1], kv[0]))[:8]),
             "n_per_block": int(t["blocks"].notna().sum()) if per_block_ok else 0,
             "examples_window": f"{ward_window[0]}-{ward_window[-1]}" if pool is recent else "all years",
             "cheapest": [example(r) for r in cheapest.itertuples()],
