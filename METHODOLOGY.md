@@ -116,12 +116,14 @@ These tables come from `scripts/build_item_costs.py`.
 - Street-segment locations from 2012 on usually print address numbers ("FROM … (1600 N) TO … (1900 N)").
 - Chicago's grid runs 800 numbers per mile, about 8 blocks per mile, so blocks ≈ address span ÷ 100, summed over a project's segments. Segments shorter than half a block are skipped.
 - This is an estimate: some blocks are shorter or longer than 1/8 mile.
+- Segments whose endpoints sit on different axes (one N/S number, one E/W) are skipped.
 - It applies only to resurfacing, sidewalks, curb & gutter and lighting.
 
 **Statistics.**
 - Quartiles are shown only when a type has at least 5 line items in a year.
 - The ward table covers the last three complete years.
 - "Cheapest" and "most expensive" examples come from that window when it has enough items, otherwise from all years.
+- Per-block examples are the projects nearest the 5th and 95th percentile, not the absolute extremes. Absolute per-block extremes are mostly errors in the posted address ranges (a FROM/TO pair that doesn't match the street) or partial charges.
 
 ## Ward tables
 

@@ -80,7 +80,12 @@ def blocks(location: str) -> float | None:
     total, found = 0.0, False
     for m in RANGE.finditer(str(location or "")):
         a, da, b, db = int(m[1]), m[2], int(m[3]), m[4]
-        span = abs(a - b) if da == db else a + b  # a segment crossing the 0 baseline (Madison / State)
+        if da == db:
+            span = abs(a - b)
+        elif {da, db} in ({"N", "S"}, {"E", "W"}):
+            span = a + b  # a segment crossing the 0 baseline (Madison / State)
+        else:
+            continue  # endpoints on different axes (e.g. 10700 S to 1600 W): not a straight run
         if span / 100 >= MIN_BLOCKS:
             total += span / 100
             found = True
@@ -147,10 +152,16 @@ def main() -> None:
         priciest = pool.nlargest(3, "cost")
         block_ex = {}
         if per_block_ok:
+            # Absolute per-block extremes are dominated by errors in the posted address ranges (a
+            # FROM/TO pair that doesn't match the street) and by partial charges, so the per-block
+            # examples are the projects nearest the 5th and 95th percentile: the honest low and high end.
             withb = pool[pool["blocks"].notna()].assign(pb=lambda d: d["cost"] / d["blocks"])
             if len(withb) >= MIN_N:
-                block_ex = {"cheapest_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in withb.nsmallest(3, "pb").itertuples()],
-                            "priciest_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in withb.nlargest(3, "pb").itertuples()]}
+                def near(q):
+                    target = withb["pb"].quantile(q)
+                    return withb.iloc[(withb["pb"] - target).abs().argsort()[:3]].sort_values("pb")
+                block_ex = {"low_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in near(0.05).itertuples()],
+                            "high_per_block": [dict(example(r), per_block=round(r.pb, 2)) for r in near(0.95).itertuples()]}
         out_types.append({
             "type": type_id, "label": label, "unit": unit, "n": len(t), "years": [int(t["year"].min()), int(t["year"].max())],
             "total": round(t["cost"].sum(), 2), "names": t["name"].value_counts().head(8).to_dict(),
