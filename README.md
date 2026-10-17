@@ -12,6 +12,8 @@ These are the data behind the menu-money pages on [wardwise.org/menu](https://ww
 | `ward_year_category.csv` | Spending and share of spending per ward × year × category. Most citations quote this table. |
 | `ward_year.csv` | Totals per ward × year, plus the approximate allotment and the share spent |
 | `menu_projects.geojson` | Geocoded line items. Uses line or polygon geometry where the city geocoder returned it, points otherwise. |
+| `menu_item_costs_year.csv`, `menu_item_costs_ward.csv`, `menu_item_costs.json` | What wards actually paid per item type: counts, spread (quartiles, min/max), per-block cost where derivable, by year and by ward, with the cheapest and most expensive examples |
+| `menu_item_types.csv` | Which item names were grouped into which type |
 | `infrastructure_menu.csv` | The menu's unit prices, with a source for every row (see `infrastructure_menu_SOURCES.md`) |
 | `release_summary.json` | Row counts, citywide totals and geocode coverage per year |
 
@@ -32,6 +34,7 @@ Found an error? Open an issue with the ward, year and row `id`. Every row links 
 ```bash
 pip install -r requirements.txt
 python scripts/build_release.py   # sources/ -> data/
+python scripts/build_item_costs.py # line items -> per-type cost tables
 python scripts/validate.py        # schema, totals, and previously cited findings
 ```
 

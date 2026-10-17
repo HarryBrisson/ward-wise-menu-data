@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.0 — 2026-10-17
+What wards actually paid, per item type (`scripts/build_item_costs.py`). Line items are unchanged from v1.0.0.
+- `menu_item_types.csv`: every normalized item name and the type it was grouped under (30 types, 97.6% of line items).
+- `menu_item_costs_year.csv`: per type and year, the count plus min / p10 / p25 / median / p75 / p90 / max cost per project, and per block where it can be derived from address ranges.
+- `menu_item_costs_ward.csv`: per type and ward, 2023–2025.
+- `menu_item_costs.json`: all of the above plus the cheapest and most expensive examples, linked to their source PDFs.
+
 ## v1.0.0 — 2026-10-16
 First release.
 - 51,073 line items, 2005 – 2026 Q1 (2026 partial); 94.8% geocoded.

@@ -101,6 +101,28 @@ Every point must fall inside its own ward, allowing about 400 m for boundary str
 
 `ward_map_fit` records which map matched. 1,127 points fail the check and are discarded (`rejected_outside_ward`). Most are 2024+ alley locations, where the city address geocoder misplaces four-street alley descriptions, and some are older local geocodes. These rows still count in every total; they just aren't placed on the map.
 
+## What wards actually paid (item cost tables)
+
+These tables come from `scripts/build_item_costs.py`.
+
+**What a line-item cost is.** It's the amount OBM posts against a ward's menu allotment for one project. For most items that is CDOT's estimate when the project is approved, not an audited final cost. The menu "price" (see `infrastructure_menu.csv`) is CDOT's average used for planning; each project is then estimated on its own length, conditions and add-ons. That is why one item type spans a wide range.
+
+**Item types.**
+- Item names are normalized (parenthetical codes dropped, case and spacing folded) and matched to 30 types by ordered rules.
+- `menu_item_types.csv` lists every name and its type; unmatched names stay unclassified (about 2% of line items).
+- Change orders count under their item. The very smallest amounts are usually partial charges or adjustments, not whole projects.
+
+**Per block.**
+- Street-segment locations from 2012 on usually print address numbers ("FROM … (1600 N) TO … (1900 N)").
+- Chicago's grid runs 800 numbers per mile, about 8 blocks per mile, so blocks ≈ address span ÷ 100, summed over a project's segments. Segments shorter than half a block are skipped.
+- This is an estimate: some blocks are shorter or longer than 1/8 mile.
+- It applies only to resurfacing, sidewalks, curb & gutter and lighting.
+
+**Statistics.**
+- Quartiles are shown only when a type has at least 5 line items in a year.
+- The ward table covers the last three complete years.
+- "Cheapest" and "most expensive" examples come from that window when it has enough items, otherwise from all years.
+
 ## Ward tables
 
 - `ward_year_category.csv` holds `cost`, `projects` and `share_pct` (that category's share of the ward-year's menu spending).

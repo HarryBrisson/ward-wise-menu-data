@@ -83,6 +83,18 @@ def main() -> None:
             check(bool(row.get("source_url")) or row.get("verification") != "primary_document",
                   f"price row {row.get('item_slug')}: primary_document without source_url")
 
+    costs_path = DATA / "menu_item_costs.json"
+    if costs_path.exists():
+        costs = json.loads(costs_path.read_text())
+        check(costs["method"]["classified_share"] >= 0.95, "item-type classification fell below 95% of line items")
+        resurfacing = next((t for t in costs["types"] if t["type"] == "street_resurfacing"), None)
+        check(resurfacing is not None and resurfacing["n_per_block"] > 1000, "per-block resurfacing costs missing")
+        for t in costs["types"]:
+            for row in t["by_year"]:
+                if row.get("median") is not None:
+                    check(row["min"] <= row["p25"] <= row["median"] <= row["p75"] <= row["max"],
+                          f"{t['type']} {row['year']}: quartiles out of order")
+
     summary = json.loads((DATA / "release_summary.json").read_text())
     check(summary["rows"] == len(items), "release_summary row count stale")
 
