@@ -76,7 +76,7 @@ def main() -> None:
 
     if (DATA / "infrastructure_menu.csv").exists():
         menu = list(csv.DictReader((DATA / "infrastructure_menu.csv").open()))
-        allowed = {"primary_document", "official_secondary", "ward_wise_2023_unverified", "derived",
+        allowed = {"primary_document", "foia_response", "official_secondary", "derived",
                    "ward_office_secondary"}
         for row in menu:
             check(row.get("verification") in allowed, f"price row {row.get('item_slug')}: bad verification")

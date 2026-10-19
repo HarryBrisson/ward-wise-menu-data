@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.1.2 — 2026-10-19
+Price-list sourcing corrections. No line-item or cost-table changes.
+- The 22 prices from CDOT's 2023 Aldermanic Menu packet are relabeled `foia_response` (was `ward_wise_2023_unverified`). Ward Wise Chicago obtained the packet through a FOIA request to CDOT. `foia_response` ranks just below `primary_document`.
+- The bike-lane unit note now explains the standardization: half-mile prices converted to per block at 8 blocks ≈ 1 mile, so items compare apples to apples.
+
 ## v1.1.1 — 2026-10-17
 - Item cost tables are now byte-reproducible: every tie is broken by row `id`, so rebuilds give the same row order on any pandas version. Values are unchanged from v1.1.0.
 

@@ -9,20 +9,21 @@
 
 | Year(s) | Evidence | `verification` | Confidence |
 |---|---|---|---|
+| 2023 (22 items) | CDOT "2023 Aldermanic Menu Packet", obtained by Ward Wise Chicago through a FOIA request | `foia_response` | **High.** CDOT's own document, released under FOIA. The original PDF isn't posted publicly; we hold its text and a Word conversion. |
 | 2005–2026 (6 items) | Fixed prices recovered from the city's own ward-detail spending PDFs (most common line-item cost) | `derived` | **High** for speed humps, floodlights and light upgrades. Medium for traffic circles 2005–08 and arterial bump-outs 2020. |
 | 2015 (8 items) | CDOT's 2015 menu prices, reproduced in the 2017 OIG audit, Appendix C | `official_secondary` | **High.** It's an official city document quoting CDOT. |
-| 2023 (22 items) | CDOT "2023 Aldermanic Menu Packet", known only from a Word conversion in a Ward Wise repo | `ward_wise_2023_unverified` | **Medium-high.** The text is clearly CDOT's packet, but no city-hosted copy has been found. |
 | ~2024, ~2025 (24 rows) | Price tables posted by the 35th and 40th ward offices for participatory budgeting | `ward_office_secondary` | **Medium.** Not CDOT documents. Figures are rounded, the year is approximate, and some may be stale. |
 
-There are no `primary_document` rows yet. That label is reserved for a price list obtained directly from CDOT or OBM (see "Next steps").
+There are no `primary_document` rows yet. That label is reserved for a price list published by CDOT or OBM, or one we hold the original file for (see "Next steps"). `foia_response` ranks just below it: an official CDOT document, released under FOIA, whose original file isn't public.
 
 ## Sources in detail
 
-### 1. 2023 Aldermanic Menu Packet (22 items): `ward_wise_2023_unverified`
-- **Where the old site's list came from.** The old wardwisechicago.org list (`ward-wise-front-end` `data/menu_items_info.csv`, `public/menuItemsInfo.json`) cites no source. Its sibling repo `ward-wise/alderman-spending-data-viz` has `alderman_spending/assets/menu_items_information.docx`, committed 2023-08-06 by "Jonathan" ("Putting assets in/framing for menu items and FAQs"). The docx metadata title is **"2023 Aldermanic Menu Packet.pdf"**. It's an OCR/Word conversion of the CDOT packet: page headers read "2023 Aldermanic Menu Program", and the text is CDOT's own wording, such as "need to clear CDOT's utility review… scheduled for 2023".
+### 1. 2023 Aldermanic Menu Packet (22 items): `foia_response`
+- **Provenance.** Ward Wise Chicago obtained CDOT's 2023 Aldermanic Menu packet through a FOIA request. That is where the old site's price list came from.
+- **How the copy reached this repo.** The old wardwisechicago.org list (`ward-wise-front-end` `data/menu_items_info.csv`, `public/menuItemsInfo.json`) cites no source. Its sibling repo `ward-wise/alderman-spending-data-viz` has `alderman_spending/assets/menu_items_information.docx`, committed 2023-08-06 by "Jonathan" ("Putting assets in/framing for menu items and FAQs"). The docx metadata title is **"2023 Aldermanic Menu Packet.pdf"**. It's an OCR/Word conversion of the CDOT packet: page headers read "2023 Aldermanic Menu Program", and the text is CDOT's own wording, such as "need to clear CDOT's utility review… scheduled for 2023".
 - **Check.** All 22 prices and units on the old site match the packet text exactly (the build script asserts this). The packet line number for each price is in `source_page`.
 - **Copies.** `sources/menu_price_docs/2023_Aldermanic_Menu_Packet_wordconversion_text.txt` holds the packet text; the .docx itself is at the upstream URL above. `ward-wise-front-end_menu_items_info_2023.csv` is the old site's list.
-- **The unit conversion the old site didn't disclose.** The packet prices bike items per **half-mile**: Bike Lane/Marked Shared Lane $40,000, Buffered $60,000, Protected $250,000, Neighborhood Greenway $75,000. The old site showed bike lanes per **block** ($10,000 and $15,000), which is ÷4 and assumes 8 Chicago blocks per mile. We keep the half-mile price in `unit_cost` and put the ÷4 figure in `display_unit_cost` with a `conversion_note`.
+- **Per-block standardization.** The packet prices bike items per **half-mile**: Bike Lane/Marked Shared Lane $40,000, Buffered $60,000, Protected $250,000, Neighborhood Greenway $75,000. Ward Wise Chicago standardized these to per block ($10,000 and $15,000 for bike lanes) using 8 blocks ≈ 1 mile, so items compare apples to apples. We keep the half-mile price in `unit_cost` and put the ÷4 figure in `display_unit_cost` with a `conversion_note`.
 - **One small disagreement.** The packet says alley speed humps cost $1,400 per block, but 2023 spending line items cluster at **$1,450**. Either the packet was printed before a mid-year price change, or the OCR misread it.
 
 ### 2. 2015 CDOT prices via the OIG audit (8 items): `official_secondary`
@@ -73,6 +74,5 @@ There are no `primary_document` rows yet. That label is reserved for a price lis
 - **Not found:** packet PDFs for any year on chicago.gov, DocumentCloud, MuckRock or Scribd. Search engines don't index the packet's wording ("will be deducted from the Ward Menu balance").
 
 ## Next steps to reach `primary_document`
-1. **FOIA CDOT** (or ask a friendly ward office) for the Aldermanic Menu packet / price sheet for every year available, ideally 2012–2026. Ward offices receive it each year, and several already republish parts of it.
-2. Ask the old Ward Wise contributor ("Jonathan", alderman-spending-data-viz, Aug 2023) where the 2023 packet PDF came from, and whether the original PDF survives.
-3. When a packet arrives, add it under `sources/menu_price_docs/`, add a transcription block to the build script, and mark those rows `primary_document`.
+1. **FOIA CDOT for current packets** (a 2026 request is planned), ideally every year available from 2012 to 2026. Ward offices receive the packet each year, and several already republish parts of it.
+2. When a packet arrives, add the original PDF under `sources/menu_price_docs/`, add a transcription block to the build script, and mark those rows `primary_document`.

@@ -16,8 +16,8 @@ authors:
 repository-code: "https://github.com/HarryBrisson/ward-wise-menu-data"
 url: "https://www.wardwise.org/menu"
 license: CC-BY-4.0
-version: "1.1.1"
-date-released: "2026-10-17"
+version: "1.1.2"
+date-released: "2026-10-19"
 keywords: [Chicago, aldermanic menu, infrastructure, capital budget, wards, civic data]
 abstract: >-
   Every project funded through Chicago's Aldermanic Menu program, 2005 to 2026 Q1, extracted from

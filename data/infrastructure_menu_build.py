@@ -25,8 +25,8 @@ COLUMNS = ["item_slug", "item", "menu_year", "unit_cost", "unit", "display_unit_
            "conversion_note", "description", "notes", "vision_zero", "source_document", "source_url",
            "source_page", "retrieved_at", "verification"]
 
-HALF_MILE_NOTE = ("Native unit is a half-mile; display divides by 4 assuming 8 Chicago blocks per mile "
-                  "(4 per half-mile). The old wardwisechicago.org showed this per block without saying so.")
+HALF_MILE_NOTE = ("Native unit is a half-mile. Ward Wise Chicago standardized half-mile prices to per block "
+                  "(8 blocks ≈ 1 mile, so 4 per half-mile) so items compare apples to apples.")
 
 # --- 2023: CDOT "2023 Aldermanic Menu Packet" --------------------------------------------------------
 # slug, title in packet, price, unit as printed, packet text line (sources/menu_price_docs/..._text.txt)
@@ -70,8 +70,8 @@ FRONTEND_NAMES = {
     "Residential Street Lighting Program with Piggy Back": "street_lighting",
     "Floodlight Installation": "floodlight",
 }
-PACKET_DOC = ("2023 Aldermanic Menu Packet (CDOT), as a Word conversion of '2023 Aldermanic Menu Packet.pdf' "
-              "committed to ward-wise/alderman-spending-data-viz on 2023-08-06; extracted text in "
+PACKET_DOC = ("CDOT, '2023 Aldermanic Menu Packet', obtained by Ward Wise Chicago through a FOIA request; "
+              "Word conversion committed to ward-wise/alderman-spending-data-viz on 2023-08-06; extracted text in "
               "sources/menu_price_docs/2023_Aldermanic_Menu_Packet_wordconversion_text.txt")
 PACKET_URL = ("https://github.com/ward-wise/alderman-spending-data-viz/blob/main/"
               "alderman_spending/assets/menu_items_information.docx")
@@ -229,7 +229,7 @@ def main():
         out.append(row(slug, title, 2023, cost, unit, f["Description"], notes,
                        f["Vision_Zero_Project"].lower(), PACKET_DOC, PACKET_URL,
                        f"packet text line {line} (2023_Aldermanic_Menu_Packet_wordconversion_text.txt)",
-                       "2026-10-16", "ward_wise_2023_unverified"))
+                       "2026-10-16", "foia_response"))
     for slug, title, cost, unit, note in OIG_2015:
         out.append(row(slug, title, 2015, cost, unit, "", note, "", OIG_DOC, OIG_URL,
                        "Appendix C, report page 30 of 42 (PDF page 33)", "2026-10-16", "official_secondary"))
